@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using World_Project_First_Web_API.Data;
 
 namespace World_Project_First_Web_API.Controllers
 {
@@ -7,5 +9,11 @@ namespace World_Project_First_Web_API.Controllers
     [ApiController]
     public class CountryController : ControllerBase
     {
+        private readonly ApplicationDbContext _dbContext;
+        public CountryController(ApplicationDbContext DbContext) 
+        {
+            _dbContext = DbContext;
+        }
+
     }
 }
