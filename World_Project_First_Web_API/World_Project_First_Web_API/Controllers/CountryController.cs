@@ -35,6 +35,14 @@ namespace World_Project_First_Web_API.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public ActionResult<Country> Update([FromBody] Country country)
+        {
+            _dbContext.Countries.Update(country);
+            _dbContext.SaveChanges();
+            return Ok();
+        }
+        
          [HttpDelete("{id:int}")]
          public ActionResult Delete(int id)
          {
