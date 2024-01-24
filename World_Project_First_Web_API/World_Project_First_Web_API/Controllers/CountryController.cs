@@ -21,6 +21,12 @@ namespace World_Project_First_Web_API.Controllers
             return _dbContext.Countries.ToList();
         }
         
+        [HttpGet("{id:int}")]
+        public ActionResult<Country> Get(int id)
+        {
+            return _dbContext.Countries.Find(id);
+        }
+        
         [HttpPost]
         public ActionResult<Country> Create([FromBody] Country country)
         {
