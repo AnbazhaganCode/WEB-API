@@ -14,6 +14,13 @@ namespace World_Project_First_Web_API.Controllers
         {
             _dbContext = DbContext;
         }
+        
+        [HttpGet]
+        public ActionResult<IEnumerable<Country>> GetAll()
+        {
+            return _dbContext.Countries.ToList();
+        }
+        
         [HttpPost]
         public ActionResult<Country> Create([FromBody] Country country)
         {
