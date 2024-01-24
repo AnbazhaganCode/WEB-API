@@ -14,6 +14,12 @@ namespace World_Project_First_Web_API.Controllers
         {
             _dbContext = DbContext;
         }
-
+        [HttpPost]
+        public ActionResult<Country> Create([FromBody] Country country)
+        {
+            _dbContext.Countries.Add(country);
+            _dbContext.SaveChanges();
+            return Ok();
+        }
     }
 }
