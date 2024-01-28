@@ -42,14 +42,5 @@ namespace World_Project_First_Web_API.Controllers
             _dbContext.SaveChanges();
             return Ok();
         }
-        
-         [HttpDelete("{id:int}")]
-         public ActionResult Delete(int id)
-         {
-             Country country = _dbContext.Countries.Find(id);
-             _dbContext.Countries.Remove(country);
-             _dbContext.SaveChanges();
-             return Ok();
-         }
     }
 }
