@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using World_Project_First_Web_API.Data;
+using World_Project_First_Web_API.Models;
 
 namespace World_Project_First_Web_API.Controllers
 {
@@ -14,25 +15,40 @@ namespace World_Project_First_Web_API.Controllers
         {
             _dbContext = DbContext;
         }
-        
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         public ActionResult<IEnumerable<Country>> GetAll()
         {
-            return _dbContext.Countries.ToList();
+            var countries = _dbContext.Countries.ToList();
+            if(countries == null)
+            {
+                return NoContent();
+            }
+            return Ok(countries);
         }
-        
+
         [HttpGet("{id:int}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         public ActionResult<Country> Get(int id)
         {
-            return _dbContext.Countries.Find(id);
+            var country = _dbContext.Countries.Find(id);
+            if(country == null)
+            {
+                return NoContent();
+            }
+            return Ok(country);
         }
-        
+
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(409)]
         public ActionResult<Country> Create([FromBody] Country country)
         {
             _dbContext.Countries.Add(country);
             _dbContext.SaveChanges();
-            return Ok();
+            return CreatedAtAction("GetById",new {id=country.id},country);
         }
 
         [HttpPut]
@@ -42,14 +58,14 @@ namespace World_Project_First_Web_API.Controllers
             _dbContext.SaveChanges();
             return Ok();
         }
-        
-         [HttpDelete("{id:int}")]
-         public ActionResult Delete(int id)
-         {
-             Country country = _dbContext.Countries.Find(id);
-             _dbContext.Countries.Remove(country);
-             _dbContext.SaveChanges();
-             return Ok();
-         }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            Country country = _dbContext.Countries.Find(id);
+            _dbContext.Countries.Remove(country);
+            _dbContext.SaveChanges();
+            return Ok();
+        }
     }
 }
